@@ -6,15 +6,13 @@ let q_num_medium;
 let q_num_hard;
 let q_num_epic;
 let q_num_legy;
-let points = 0;
+let points = parseInt(localStorage.getItem("points"));
 let max = 20;
 let easy = [];
 let medium = [];
 let hard = [];
 let epic = [];
 let legy = [];
-
-console.log("Points:" + points)
 
 function setup(){
 //Easy
@@ -70,8 +68,12 @@ console.log("DIFFICULTY::" + round + " LEVEL :: " + level);
 //update page
 function displayQ(){
 
-//console log round
+//define points
+points = parseInt(localStorage.getItem("points"));
+
+//console log round and points
 console.log("ROUND::" + round);
+console.log("Points:" + points)
 
 //display difficulty
 let display_lvl = document.getElementById("level");
@@ -97,8 +99,8 @@ if(level == "legy") question = legy[q_num_legy];
 
 //display background_image
 console.log(window.getComputedStyle(document.documentElement).getPropertyValue('--background-image'))
-//document.documentElement.style.setProperty('--background-image', `url('./images/${questions[level][question].b_img}')`);
-console.log("Question::" + question)
+document.documentElement.style.setProperty('--background-image', `url('./images/${questions[level][question].b_img}')`);
+
 
 //console.log (debug)
 console.log("QUESTIONS.[LEVEL].AMOUNT::" + questions[level][question].name)
@@ -126,17 +128,23 @@ aD.innerText = questions[level][question].ansD
 
 //on answer given
 function next(ans){
+
+//define points
+points = parseInt(localStorage.getItem("points"));
+
+//clear console
+console.clear();
+
 //new round
 round++;
 
 //check wether answer was correct
-if(ans == questions[level][question].correct) points += questions[level][question].points;
+if(ans == questions[level][question].correct) localStorage.setItem("points", points + questions[level][question].points)
 console.log("RECIEVED ANSWER:" + ans)
-console.log("POINTS::" + points)
+console.log("POINTS::" + points + "..." + questions[level][question].points)
 
 //check if quizz has ended
 if(round > max) {
-localStorage.setItem("points", points)
 location.replace("quizz_end.html");
 }
 //delete question from question pool
@@ -148,11 +156,12 @@ if(level == "legy") legy.splice(q_num_legy, 1), console.log("LEGY[]::" + legy);
 
 //increase diff and update level
 checkdiff();
-
 displayQ();
 }
 
-
+function epmtyStorage(){
+localStorage.setItem("points", 0)
+}
 
 
 let questions = {
@@ -203,8 +212,74 @@ let questions = {
             correct: "B",
             b_img: "q3.jpg"
         },
+        q5:{
+            name: "q5",
+            q: "Ein deutsche Sprichwort besagt 'Schönheit liegt im Auge des ... '",
+            points: 1,
+            ansA: "Einzelnen", 
+            ansB: "Betrachters",
+            ansC: "Beobachters",
+            ansD: "Begutachters",
+            correct: "B",
+            b_img: "q3.jpg"
+        },
+        q6:{
+            name: "q6",
+            q: "Das englische wort 'rual' meint: ",
+            points: 1,
+            ansA: "ruihg", 
+            ansB: "(be)-herrschen",
+            ansC: "radikal",
+            ansD: "ländlich",
+            correct: "D",
+            b_img: "q3.jpg"
+        },
+        q7:{
+            name: "q7",
+            q: "17 * 3 + 7 ergibt?",
+            points: 1,
+            ansA: "68", 
+            ansB: "58",
+            ansC: "3 * 4^2 + 9",
+            ansD: "119",
+            correct: "B",
+            b_img: "q3.jpg"
+        },
+        q8:{
+            name: "q8",
+            q: "Der höchste Punkt Deutschlands heißt?",
+            points: 1,
+            ansA: "Großer Gipfel", 
+            ansB: "Kalte Spitze",
+            ansC: "Einsame Spitze",
+            ansD: "Zugspitze",
+            correct: "D",
+            b_img: "q3.jpg"
+        },
+        q9:{
+            name: "q9",
+            q: "Welcher dieser Filme erzielte das höchsten Einspielergebnis (stand 2021)?",
+            points: 1,
+            ansA: "Titanic", 
+            ansB: "Avengers: Endgame",
+            ansC: "Avatar - Aufbruch nach Pandora",
+            ansD: "Jurassic World",
+            correct: "B",
+            b_img: "q3.jpg"
+        },
+        q10:{
+            name: "q10",
+            q: "Worum handelt es sich bei einem 'meme' (englisch)?",
+            points: 1,
+            ansA: "eine Imitation einer Person oder Situation", 
+            ansB: "Ein Scherz",
+            ansC: "ein Streich",
+            ansD: "ein Follower auf TikTok ('Abonnent' auf Youtube)",
+            correct: "A",
+            b_img: "q3.jpg"
+        },
         
-        amount: 4
+        amount: 10
     },
     medium: {
 
@@ -252,7 +327,74 @@ let questions = {
             correct: "C",
             b_img: "q2.jpg"
         },
-       amount: 4
+        q5:{
+            name: "q5",
+            q: "Wann wurde der Buchdruck erfunden?",
+            points: 1,
+            ansA: "Mitte des 12. Jahrhunderts", 
+            ansB: "Anfang des 14. Jahrhunderts",
+            ansC: "Mitte des 15. Jahrhunderts",
+            ansD: "Ende des 15. Jahrhunderts",
+            correct: "C",
+            b_img: "q2.jpg"
+        },
+        q6:{
+            name: "q6",
+            q: "Wie heißt das Pendant der 10 Gebote des Islam?",
+            points: 1,
+            ansA: "Die 5 Säulen des Islam", 
+            ansB: "Die 10 Gebote des Islam",
+            ansC: "Die 7 Sünden",
+            ansD: "Die 8 Wahrsagungen des Islam ",
+            correct: "A",
+            b_img: "q2.jpg"
+        },
+        q7:{
+            name: "q7",
+            q: "Welches chemische Element steht im Periodensystem als 'Fe'?",
+            points: 1,
+            ansA: "Chlor", 
+            ansB: "Stickstoff",
+            ansC: "Eisen",
+            ansD: "Fluor",
+            correct: "C",
+            b_img: "q2.jpg"
+        },
+        q8:{
+            name: "q8",
+            q: "In welchem Jahr wurde die deutsche Mauer erbaut?",
+            points: 1,
+            ansA: "1949", 
+            ansB: "1961",
+            ansC: "1955",
+            ansD: "1957",
+            correct: "B",
+            b_img: "q2.jpg"
+        },
+        q9:{
+            name: "q9",
+            q: "In welchem historischen Krieg überquerte Hannibal mit seinen Elefanten die Alpen?",
+            points: 1,
+            ansA: "1. punischer Krieg", 
+            ansB: "2. punischer Krieg",
+            ansC: "1. peloponnesischer Krieg",
+            ansD: "3. punischer krieg",
+            correct: "B",
+            b_img: "q2.jpg"
+        },  
+        q10:{
+            name: "q10",
+            q: "Welche Flagge trägft die Farben Orange-Weiß-Grün (beachte Reihenfolge)",
+            points: 1,
+            ansA: "Äthiopien", 
+            ansB: "Elfenbeinküste",
+            ansC: "Irland",
+            ansD: "Belgien",
+            correct: "B",
+            b_img: "q2.jpg"
+        },
+        amount: 4
+
     },
     hard:{
 
@@ -291,32 +433,99 @@ let questions = {
         },
         q4:{
             name: "q4",
-            q: "Welcher Stoff gibt Blättern ihre grüne Farbe?",
+            q: "Wie nennt man die Zahl unter der Wurzel?",
             points: 1,
-            ansA: "Kaliumhexacyanoferrat", 
-            ansB: "Chromoplast",
-            ansC: "Chlorophyll",
-            ansD: "Chloroplast",
+            ansA: "Radikand", 
+            ansB: "Quotient",
+            ansC: "Exponnent",
+            ansD: "Rotend",
+            correct: "A",
+            b_img: "q2.jpg"
+        },
+        q5:{
+            name: "q5",
+            q: "Welcher Staat ist kein Gründungsmitglied der EU?",
+            points: 1,
+            ansA: "Belgien", 
+            ansB: "Spanien",
+            ansC: "Deutschland",
+            ansD: "Luxemburg",
+            correct: "B",
+            b_img: "q2.jpg"
+        },
+        q6:{
+            name: "q6",
+            q: "In welchem Jahr fanden die ersten offiziellen Paralympischen Spiele statt?",
+            points: 1,
+            ansA: "1954", 
+            ansB: "1962",
+            ansC: "1960",
+            ansD: "1932",
             correct: "C",
             b_img: "q2.jpg"
         },
-        amount: 4
+        q7:{
+            name: "q7",
+            q: "Welche ist die größte Wüste der Welt?",
+            points: 1,
+            ansA: "Kalahari", 
+            ansB: "Mojave-Wüste",
+            ansC: "Antarktis",
+            ansD: "Sahara",
+            correct: "C",
+            b_img: "q2.jpg"
+        },
+        q8:{
+            name: "q8",
+            q: "Seit wann gibt es die deutsche Fußball-Bundesliga?",
+            points: 1,
+            ansA: "30. Juni 1877", 
+            ansB: "22. August 1958",
+            ansC: "2. Januar 1964",
+            ansD: "38. Juli 1962",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        q9:{
+            name: "q9",
+            q: "Welche ist die zweitgrößte Religion (Anzahl der Mitglider)?",
+            points: 1,
+            ansA: "Budhismus", 
+            ansB: "Islam",
+            ansC: "Judentum",
+            ansD: "Hinduismus",
+            correct: "B",
+            b_img: "q2.jpg"
+        },
+        q10:{
+            name: "q10",
+            q: "Wie lautet der zweit-häufigste Straßenname in Deutschland",
+            points: 1,
+            ansA: "Bergstraße", 
+            ansB: "Hauptstraße",
+            ansC: "Schulstraße",
+            ansD: "Gartenstraße",
+            correct: "C",
+            b_img: "q2.jpg"
+        },
+        
+        amount: 10
     },
     epic:{
         q1:{
             name: "q1",
-            q: "PLACEHOLDER",
+            q: "Welches Kaiserreich endete als letztes?",
             points: 1,
-            ansA: "ANSWER A", 
-            ansB: "ANSWER B",
-            ansC: "ANSWER C",
-            ansD: "ANSWER D",
-            correct: "D",
+            ansA: "Japan", 
+            ansB: "Deutschland",
+            ansC: "China",
+            ansD: "Russland",
+            correct: "B",
             b_img: "q2.jpg"
         },
         q2:{
             name: "q2",
-            q: "PLACEHOLDER",
+            q: "",
             points: 1,
             ansA: "ANSWER A", 
             ansB: "ANSWER B",
@@ -347,7 +556,73 @@ let questions = {
             correct: "D",
             b_img: "q2.jpg"
         },
-        amount: 4
+        q5:{
+            name: "q5",
+            q: "PLACEHOLDER",
+            points: 1,
+            ansA: "ANSWER A", 
+            ansB: "ANSWER B",
+            ansC: "ANSWER C",
+            ansD: "ANSWER D",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        q6:{
+            name: "q6",
+            q: "PLACEHOLDER",
+            points: 1,
+            ansA: "ANSWER A", 
+            ansB: "ANSWER B",
+            ansC: "ANSWER C",
+            ansD: "ANSWER D",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        q7:{
+            name: "q7",
+            q: "PLACEHOLDER",
+            points: 1,
+            ansA: "ANSWER A", 
+            ansB: "ANSWER B",
+            ansC: "ANSWER C",
+            ansD: "ANSWER D",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        q8:{
+            name: "q8",
+            q: "PLACEHOLDER",
+            points: 1,
+            ansA: "ANSWER A", 
+            ansB: "ANSWER B",
+            ansC: "ANSWER C",
+            ansD: "ANSWER D",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        q9:{
+            name: "q9",
+            q: "PLACEHOLDER",
+            points: 1,
+            ansA: "ANSWER A", 
+            ansB: "ANSWER B",
+            ansC: "ANSWER C",
+            ansD: "ANSWER D",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        q10:{
+            name: "q10",
+            q: "PLACEHOLDER",
+            points: 1,
+            ansA: "ANSWER A", 
+            ansB: "ANSWER B",
+            ansC: "ANSWER C",
+            ansD: "ANSWER D",
+            correct: "D",
+            b_img: "q2.jpg"
+        },
+        amount: 10
     },
     legy:{
         q1:{
@@ -411,6 +686,9 @@ epic: 12,
 legy: 16
 }
 
+
+
 //start
+epmtyStorage()
 setup();
 displayQ();
